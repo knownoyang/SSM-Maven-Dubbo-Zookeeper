@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<dubbo:application name="ssm-provider" />
+	<!-- <dubbo:registry address="multicast://224.5.6.7:1234" /> -->
+	
+	<!-- 指定zookkper为注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="127.0.0.1:2181"></dubbo:registry>
+	<!-- 指定所使用的协议 和端口 用 dubbo 协议在 20880端口暴露服务（如果有多个提供者，则端口号不能重复） - -->
+	<dubbo:protocol name="dubbo" port="20880" />
+	<!-- 暴露给外侧 提供服务的接口 -->
+	<dubbo:service interface="com.etc.service.UsersService"
+		ref="usersService" />
+	<!-- 创建bean给上面的  dubbo:service 使用-->	
+	<bean id="usersService" class="com.etc.service.impl.UsersServiceImpl"/>
+	
+</beans>
